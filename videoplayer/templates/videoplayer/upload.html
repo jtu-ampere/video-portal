@@ -1,0 +1,262 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--{% load static %}-->
+<!--<head>-->
+
+
+<!--  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
+<!--  <link rel="shortcut icon" type="image/png" href="{% static 'favicon-32x32.png' %}">-->
+<!--&lt;!&ndash;  <img src="{% static 'favicon.ico' %}" >&ndash;&gt;-->
+<!--  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">-->
+<!--  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic|Inconsolata:italic|Droid+Sans">-->
+
+
+<!-- <title>Upload and Process Video for Streaming</title>-->
+<!-- <style>-->
+<!--     .message {-->
+<!--         white-space: pre-line;-->
+<!--         font-family: monospace;-->
+<!--     }-->
+<!--&lt;!&ndash;     .container {&ndash;&gt;-->
+<!--&lt;!&ndash;         width: 900px;&ndash;&gt;-->
+<!--&lt;!&ndash;         margin: 0 auto;&ndash;&gt;-->
+<!--&lt;!&ndash;         padding: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;         border: 1px solid #ccc;&ndash;&gt;-->
+<!--&lt;!&ndash;     }&ndash;&gt;-->
+<!--     .form-container {-->
+<!--         margin-bottom: 20px;-->
+<!--     }-->
+<!--     .message-container {-->
+<!--         height: 500px;-->
+<!--         overflow-y: scroll;-->
+<!--         border: 1px solid #ccc;-->
+<!--         padding: 10px;-->
+<!--     }-->
+<!-- </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--  <div class="navbar">-->
+<!--    <div class="container">-->
+<!--      <div class="logo_div">-->
+<!--        <a href="/"><img src="{% static 'logo.png' %}" alt="" class="logo"></a>-->
+<!--      </div>-->
+<!--      <div class="navbar_links">-->
+<!--        <ul class="menu">-->
+<!--          <li><a href="{% url 'video_list' %}">Home</a></li>-->
+<!--          <li><a href="{% url 'dash' %}">DASH</a></li>-->
+<!--          <li><a href="{% url 'hls' %}">HLS</a></li>-->
+<!--          <li><a href="{% url 'upload' %}">Upload</a></li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!-- <div class="container">-->
+<!--     <h1>Upload and Process Video for Streaming</h1>-->
+<!--     <div></div>-->
+<!--     <div class="form-container">-->
+<!--         <form method="post" id="my-form">-->
+<!--             {% csrf_token %}-->
+<!--             {{ form.as_p }}-->
+<!--             <input type="submit" value="Execute">-->
+<!--         </form>-->
+<!--     </div>-->
+<!--     <div class="message-container" id="message-container"></div>-->
+<!-- </div>-->
+
+<!-- <script>-->
+<!--   function handleStreamedMessages() {-->
+<!--       const messageContainer = document.getElementById('message-container');-->
+<!--       const form = document.getElementById('my-form');-->
+<!--       const eventSource = new EventSource("{% url 'upload' %}");-->
+
+
+<!--       eventSource.onmessage = function(event) {-->
+<!--           const message = event.data;-->
+<!--           messageContainer.innerHTML += '<p class="message">' + message + '</p>';-->
+<!--       };-->
+
+
+<!--       eventSource.onerror = function(event) {-->
+<!--           console.error('An error occurred with the event source:', event);-->
+<!--           eventSource.close();-->
+<!--       };-->
+
+
+<!--       form.addEventListener('submit', function(event) {-->
+<!--           event.preventDefault();-->
+<!--           const formData = new FormData(form);-->
+
+
+<!--           fetch("{% url 'upload' %}", {-->
+<!--               method: 'POST',-->
+<!--               body: formData-->
+<!--           })-->
+<!--           .then(function(response) {-->
+<!--               if (!response.ok) {-->
+<!--                   throw new Error('Request failed');-->
+<!--               }-->
+<!--               const reader = response.body.getReader();-->
+
+
+<!--               function readStream() {-->
+<!--                   return reader.read().then(({ done, value }) => {-->
+<!--                       if (done) {-->
+<!--                           return;-->
+<!--                       }-->
+<!--                       const message = new TextDecoder().decode(value);-->
+<!--                       messageContainer.innerHTML += '<p class="message">' + message + '</p>';-->
+<!--                       return readStream();-->
+<!--                   });-->
+<!--               }-->
+
+
+<!--               return readStream();-->
+<!--           })-->
+<!--           .catch(function(error) {-->
+<!--               console.error('An error occurred with the form submission:', error);-->
+<!--           });-->
+<!--       });-->
+<!--   }-->
+
+
+<!--   handleStreamedMessages();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon-32x32.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic|Inconsolata:italic|Droid+Sans">
+    <title>Upload and Process Video for Streaming</title>
+    <style>
+        .message {
+            white-space: pre-line;
+            font-family: monospace;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .message-section {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        #my-form input[type="text"],
+        #my-form input[type="submit"] {
+            margin-bottom: 5px;
+        }
+        #my-form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        #my-form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .title-section {
+            margin-bottom: 20px;
+        }
+        .form-divider {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <div class="logo_div">
+            <a href="/"><img src="{% static 'logo.png' %}" alt="" class="logo"></a>
+        </div>
+        <div class="navbar_links">
+            <ul class="menu">
+                <li><a href="{% url 'video_list' %}">Home</a></li>
+                <li><a href="{% url 'dash' %}">DASH</a></li>
+                <li><a href="{% url 'hls' %}">HLS</a></li>
+                <li><a href="{% url 'upload' %}">Upload</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="form-divider"></div>
+    <div class="title-section">
+        <h1 style="font-size: 18px;">Upload and Process Video for Streaming</h1>
+    </div>
+    <div class="form-divider"></div>
+    <div class="form-section">
+        <form method="post" id="my-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-divider"></div>
+            <input type="submit" value="Execute">
+        </form>
+    </div>
+    <div class="message-section" id="message-container"></div>
+</div>
+
+<script>
+    function handleStreamedMessages() {
+        const messageContainer = document.getElementById('message-container');
+        const form = document.getElementById('my-form');
+        const eventSource = new EventSource("{% url 'upload' %}");
+
+        eventSource.onmessage = function(event) {
+            const message = event.data;
+            messageContainer.innerHTML += '<p class="message">' + message + '</p>';
+        };
+
+        eventSource.onerror = function(event) {
+            console.error('An error occurred with the event source:', event);
+            eventSource.close();
+        };
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+
+            fetch("{% url 'upload' %}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+                const reader = response.body.getReader();
+
+                function readStream() {
+                    return reader.read().then(({ done, value }) => {
+                        if (done) {
+                            return;
+                        }
+                        const message = new TextDecoder().decode(value);
+                        messageContainer.innerHTML += '<p class="message">' + message + '</p>';
+                        return readStream();
+                    });
+                }
+
+                return readStream();
+            })
+            .catch(function(error) {
+                console.error('An error occurred with the form submission:', error);
+            });
+        });
+    }
+
+    handleStreamedMessages();
+</script>
+</body>
+</html>
+
+
+
