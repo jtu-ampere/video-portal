@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-rh9oloj&a$i@!#q=_71y!tf88!7y3n9-&8cl)84#_ey4ern8al
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.77.123.232','127.0.0.1','demo.mk8snode4.hhii.ampere']
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -87,11 +87,11 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': '10.77.123.232',
-        'PORT': '30312',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 
@@ -141,10 +141,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-MINIO_ENDPOINT = 'console.minio.mk8snode4.hhii.ampere'
+MINIO_ENDPOINT = os.environ.get("MINIO_ENDPOINT")
+#'console.minio.mk8snode4.hhii.ampere'
 
 # MINIO_ENDPOINT = '10.77.123.232:31888'
-MINIO_ACCESS_KEY = 'BrX27xJJZPtwP90vYCC7'
-MINIO_SECRET_KEY = 'E3KDljYLLDsIaiije4dw6PLa9VXYBsWYi9b945vH'
-MINIO_BUCKET_NAME = 'vpp-dst'
+MINIO_ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY")
+MINIO_SECRET_KEY = os.environ.get("MINIO_SECRET_KEY")
+MINIO_BUCKET_NAME = os.environ.get("MINIO_BUCKET_NAME")
+
+
 

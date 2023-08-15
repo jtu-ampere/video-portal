@@ -15,12 +15,36 @@ spec:
       containers:
       - name: app
         image: gulianglily/vod_backend_poc2-app:latest
-        command: ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+        command: ["/bin/sh", "-c"]
+        args:
+        - "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
         ports:
         - containerPort: 8000
         volumeMounts:
         - name: code-volume
           mountPath: /code
+        env:
+          - name: MINIO_ENDPOINT
+            value: "console.minio.mk8snode4.hhii.ampere"
+          - name: MINIO_ACCESS_KEY
+            value: "BrX27xJJZPtwP90vYCC7"
+          - name: MINIO_SECRET_KEY
+            value: "E3KDljYLLDsIaiije4dw6PLa9VXYBsWYi9b945vH"
+          - name: MINIO_BUCKET_NAME
+            value: "vpp-dst"
+          - name: DJANGO_ALLOWED_HOSTS
+            value: "demo.mk8snode4.hhii.ampere,10.77.123.232,127.0.0.1"
+          - name: DB_NAME
+            value: "postgres"
+          - name: DB_USER
+            value: "postgres"
+          - name: DB_PASSWORD
+            value: "password"
+          - name: DB_HOST
+            value: "10.77.123.232"
+          - name: DB_PORT
+            value: "31374"
+
       volumes:
       - name: code-volume
         hostPath:
