@@ -149,5 +149,6 @@ MINIO_ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY")
 MINIO_SECRET_KEY = os.environ.get("MINIO_SECRET_KEY")
 MINIO_BUCKET_NAME = os.environ.get("MINIO_BUCKET_NAME")
 
+K8SCONFIG_PATH = os.environ.get("K8SCONFIG_PATH")
 
 

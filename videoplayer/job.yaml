@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: vpp-app-f623f225-9658-4719-86a1-e113bb28508e
+  name: vpp-app-70c52150-b4a2-4375-ab5e-5dada58cac35
   labels:
-    app: vpp-app-f623f225-9658-4719-86a1-e113bb28508e
+    app: vpp-app-70c52150-b4a2-4375-ab5e-5dada58cac35
 spec:
   volumes:
   - name: credentials
@@ -27,7 +27,7 @@ spec:
       value: "vpp-dst"
     resources:
       limits:
-        cpu: "20"
+        cpu: "30"
       requests:
         cpu: "15"
     volumeMounts:

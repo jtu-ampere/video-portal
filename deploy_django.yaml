@@ -44,6 +44,8 @@ spec:
             value: "10.77.123.232"
           - name: DB_PORT
             value: "30312"
+          - name: K8SCONFIG_PATH
+            value: "/home/altrauser/mk8s-kubeconfig-node4"
 
       volumes:
       - name: code-volume
