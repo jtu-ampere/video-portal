@@ -15,8 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from processapp import views
-from uploadvideo.views import upload_video
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -24,13 +22,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mymodel/', include('myapp.urls')),
-    path('', include('myapp.urls')),
-    path('', include('processapp.urls')),
-    path('', include('processvideoapp.urls')),
-    path('upload-video/', upload_video, name='upload_video'),
+    # path('mymodel/', include('myapp.urls')),
+    # path('', include('myapp.urls')),
+    # path('', include('processapp.urls')),
+    # path('', include('processvideoapp.urls')),
+    # path('upload-video/', upload_video, name='upload_video'),
     path('', include('videoplayer.urls')),
-    path('', include('uploadpod.urls')),
+    # path('', include('uploadpod.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

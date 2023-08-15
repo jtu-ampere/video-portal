@@ -208,12 +208,12 @@ def step2_process_video(k8s_core_v1, filename, minio_client, videoprocess_uuid):
     # Generate YAML file
     print('num:',videoprocess_uuid)
     num = str(videoprocess_uuid)
-    yaml_file = generate_yaml_file(num, str(filename))  # todooooooooooooooo
+    yaml_file = generate_yaml_file(num, str(filename), settings.MINIO_ENDPOINT)
     # msg = "\n\n" + "generate yaml file:\n" + yaml_file + "\n\n"
     # yield msg
 
     yaml_file = 'videoplayer/job.yaml'
-    utils.create_from_yaml(aApiClient, yaml_file, verbose=True, namespace="poc4")
+    utils.create_from_yaml(aApiClient, yaml_file, verbose=True, namespace="process-ns")
     msg = "YAML file Applied.\n\n"
     yield msg
 
@@ -221,7 +221,7 @@ def step2_process_video(k8s_core_v1, filename, minio_client, videoprocess_uuid):
     while not job_completed:
         api_response = k8s_core_v1.read_namespaced_pod_status(
             name='vpp-app-' + str(num),
-            namespace="poc4")
+            namespace="process-ns")
         if api_response.status.container_statuses is not None:
             for container in api_response.status.container_statuses:
                 if container.state is not None and container.state.terminated is not None:

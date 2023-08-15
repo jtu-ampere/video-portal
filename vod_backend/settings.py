@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-rh9oloj&a$i@!#q=_71y!tf88!7y3n9-&8cl)84#_ey4ern8al
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.77.123.104','127.0.0.1','demo.mk8snode4.hhii.ampere']
+ALLOWED_HOSTS = ['10.77.123.232','127.0.0.1','demo.mk8snode4.hhii.ampere']
 
 
 # Application definition
@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'myapp',
-    'processapp',
-    'uploadvideo',
-    'processvideoapp',
+    # 'myapp',
+    # 'processapp',
+    # 'uploadvideo',
+    # 'processvideoapp',
     'videoplayer',
-    'uploadpod',
+    # 'uploadpod',
 ]
 
 MIDDLEWARE = [
@@ -87,11 +87,11 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vod_db',
-        'USER': 'postgres',
+        'NAME': 'postgres',
+        'USER': 'admin',
         'PASSWORD': 'password',
-        'HOST': '10.77.123.104',
-        'PORT': '31374',
+        'HOST': '10.77.123.232',
+        'PORT': '5432',
     }
 }
 
@@ -142,7 +142,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 MINIO_ENDPOINT = 'console.minio.mk8snode4.hhii.ampere'
-MINIO_ACCESS_KEY = 'SN2P7M39HFupJSGRq7QQ'
-MINIO_SECRET_KEY = 'h7VaXK8biLIVV6geONrGlAdwjTUckpG0SsZCrE9w'
+
+# MINIO_ENDPOINT = '10.77.123.232:31888'
+MINIO_ACCESS_KEY = 'BrX27xJJZPtwP90vYCC7'
+MINIO_SECRET_KEY = 'E3KDljYLLDsIaiije4dw6PLa9VXYBsWYi9b945vH'
 MINIO_BUCKET_NAME = 'vpp-dst'
 
