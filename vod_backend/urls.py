@@ -22,13 +22,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('mymodel/', include('myapp.urls')),
-    # path('', include('myapp.urls')),
-    # path('', include('processapp.urls')),
-    # path('', include('processvideoapp.urls')),
-    # path('upload-video/', upload_video, name='upload_video'),
     path('', include('videoplayer.urls')),
-    # path('', include('uploadpod.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
