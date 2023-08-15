@@ -43,7 +43,7 @@ spec:
           - name: DB_HOST
             value: "10.77.123.232"
           - name: DB_PORT
-            value: "31374"
+            value: "30312"
 
       volumes:
       - name: code-volume
