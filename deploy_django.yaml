@@ -45,9 +45,10 @@ spec:
           - name: DB_PORT
             value: "30312"
 
-#      volumes:
-#      - name: code-volume
-#        hostPath:
+      volumes:
+      - name: code-volume
+        hostPath:
+          path: .
 #          path: /home/altrauser/vod_portal_tidy
 
 ---
