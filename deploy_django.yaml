@@ -45,10 +45,10 @@ spec:
           - name: DB_PORT
             value: "30312"
 
-      volumes:
-      - name: code-volume
-        hostPath:
-          path: /home/altrauser/vod_portal_tidy
+#      volumes:
+#      - name: code-volume
+#        hostPath:
+#          path: /home/altrauser/vod_portal_tidy
 
 ---
 apiVersion: networking.k8s.io/v1
