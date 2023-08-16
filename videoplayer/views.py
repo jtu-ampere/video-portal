@@ -116,7 +116,7 @@ def upload(request):
             # num = str(form.cleaned_data['num_input'])
             filename = form.cleaned_data['video_file']
 
-            config.load_kube_config(settings.K8SCONFIG_PATH)
+            config.load_kube_config('videoplayer/mk8s-kubeconfig-node4')
             k8s_core_v1 = client.CoreV1Api()
 
             # Initialize MinIO client
