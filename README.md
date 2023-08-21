@@ -12,6 +12,13 @@ docker run -d -p 8000:8000 -v $(pwd):/code gulianglily/vod_backend_poc1-app:late
 ### deploy Django method 3:
 For Kubernetes:
 ```
-kubectl apply -f deploy_django.yaml -n poc1 
+kubectl apply -f deploy_django.yaml -n poc3
 ```
 
+### deploy Video Portal
+For Kubernetes:
+Update the parameters for MinIO, and the ones like Host IP, port and credential for postgresql
+
+```
+kubectl apply -f video-portal-deployment.yaml -n video-portal 
+```
