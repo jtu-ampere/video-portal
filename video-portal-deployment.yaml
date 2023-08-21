@@ -1,0 +1,99 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: video-portal-app-pv-claim
+  labels:
+    app: video-portal-app
+spec:
+  storageClassName: fastdata-hostpath
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: video-poral-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: video-poral-app
+  template:
+    metadata:
+      labels:
+        app: video-poral-app
+    spec:
+      containers:
+      - name: video-poral-app
+        image: docker.io/gulianglily/vod_portal_tidy-app:latest
+        command: ["/bin/sh", "-c"]
+        args:
+        - "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: code-volume
+          mountPath: /media
+        env:
+          - name: MINIO_ENDPOINT
+            value: "console.minio.mk8snode4.hhii.ampere"
+          - name: MINIO_ACCESS_KEY
+            value: "[ACCESS-KEY]"
+          - name: MINIO_SECRET_KEY
+            value: "[SECRET-key]"
+          - name: MINIO_BUCKET_NAME
+            value: "vpp-dst"
+          - name: MINIO_SRC_BUCKET_NAME
+            value: "vpp-src"
+          - name: MINIO_DST_BUCKET_NAME
+            value: "vpp-dst"
+          - name: DJANGO_ALLOWED_HOSTS
+            value: "[hostname],[Host IP Address],127.0.0.1"
+          - name: DB_NAME
+            value: "postgres"
+          - name: DB_USER
+            value: "psql"
+          - name: DB_PASSWORD
+            value: "password"
+          - name: DB_HOST
+            value: "[Cluster IP]"
+          - name: DB_PORT
+            value: "5432"
+
+      volumes:
+        - name: code-volume
+          persistentVolumeClaim:
+            claimName: video-portal-app-pv-claim
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: video-poral-app-ingress
+spec:
+  rules:
+  - host: demo.mk8snode4.hhii.ampere
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: video-poral-app-service
+            port:
+              number: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: video-poral-app-service
+spec:
+  selector:
+    app: video-poral-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
