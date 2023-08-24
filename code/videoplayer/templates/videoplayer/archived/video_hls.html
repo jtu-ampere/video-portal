@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon-32x32.png' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic|Inconsolata:italic|Droid+Sans">
+  <style>
+    .desc {
+      padding: 15px;
+      text-align: center;
+      font-family: Calibri, 'Droid Sans', 'sans-serif';
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="container">
+      <div class="logo_div">
+        <a href="/"><img src="{% static 'logo.png' %}" alt="" class="logo"></a>
+      </div>
+      <div class="navbar_links">
+        <ul class="menu">
+          <li><a href="{% url 'video_list' %}">Home</a></li>
+          <li><a href="{% url 'dash' %}">DASH</a></li>
+          <li><a href="{% url 'hls' %}">HLS</a></li>
+          <li><a href="{% url 'upload' %}">Upload</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style='height: 20px; width: 100%'></div>
+  <script src="{% static 'hls.js' %}"></script>
+
+        <center>
+          <h2 class='headname'>{{ description }} | Streaming over HLS</h2>
+          <video height="600" id="video" controls autoplay loop muted class="videoCentered"></video>
+        <div class="desc">{{ video_title }}</div>
+
+        </center>  <br>
+        <script>
+        if(Hls.isSupported()) {
+          var video = document.getElementById('video');
+          var hls = new Hls();
+          hls.loadSource('http://vod.mk8snode4.hhii.ampere/hls/{{ video_title }}_,240p.mp4,360p.mp4,480p.mp4,720p.mp4,1080p.mp4,.en_US.vtt,.urlset/master.m3u8');
+
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED,function() {
+            video.play();
+        });
+       }
+       // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+       // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+       // This is using the built-in support of the plain video element, without using hls.js.
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = 'http://vod.mk8snode4.hhii.ampere/hls/{{ video_title }}_,240p.mp4,360p.mp4,480p.mp4,720p.mp4,1080p.mp4,2160p.mp4,.en_US.vtt,.urlset/master.m3u8';
+          video.addEventListener('canplay',function() {
+            video.play();
+          });
+        }
+      </script>
+
+</body>
+
+</html>

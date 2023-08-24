@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vpp-app-1bfd8dc9f-48f3-412d-8353-ec5a5e6c3a66
+  labels:
+    app: vpp-app-1bfd8dc9f-48f3-412d-8353-ec5a5e6c3a66
+spec:
+  volumes:
+  - name: credentials
+    configMap:
+      name: miniocredentials
+  containers:
+  - name: vpp-app-1bfd8dc9f-48f3-412d-8353-ec5a5e6c3a66
+    image: docker.io/mrdojojo/video-processor-ffmpeg:1.2
+    env:
+    - name: ENDPOINT_URL
+      value: "http://console.minio.mk8snode4.hhii.ampere/"
+    - name: SRC_OBJECT_KEY
+      value: "Ampere_AI.mp4"
+    - name: SRC_S3_BUCKET
+      value: "vpp-src"
+    - name: SRC_S3_REGION
+      value: ""
+    - name: DST_S3_REGION
+      value: ""
+    - name: DST_S3_BUCKET
+      value: "vpp-dst"
+    resources:
+      limits:
+        cpu: "30"
+      requests:
+        cpu: "15"
+    volumeMounts:
+    - name: credentials
+      readOnly: true
+      mountPath: "/home/altrauser/.aws/credentials"
+      subPath: credentials
+  restartPolicy: OnFailure
+   
