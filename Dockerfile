@@ -1,15 +1,18 @@
-FROM python:3.9
-
+FROM python:3.10-slim-bullseye
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir /code
-WORKDIR /code
+# Download latest listing of available packages:
+RUN apt-get -y update
+# Upgrade already installed packages:
+RUN apt-get -y upgrade
+# Install a new package:
+RUN apt-get -y install vim net-tools
 
 RUN pip install pip -U
 
-ADD requirements.txt /code/
+RUN mkdir /root/.kube/
 
+COPY code /code
+WORKDIR /code
 RUN pip install -r requirements.txt
-
-ADD . /code/
-
+RUN rm requirements.txt
