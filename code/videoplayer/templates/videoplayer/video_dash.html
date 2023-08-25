@@ -45,7 +45,7 @@
 
         <script>
             (function(){
-                var url = "http://vod.mk8snode4.hhii.ampere/dash/{{ video_title }}_,240p.mp4,360p.mp4,480p.mp4,720p.mp4,1080p.mp4,.en_US.vtt,.urlset/manifest.mpd";
+                var url = "http://vod.microk8s.hhii.ampere/dash/{{ video_title }}_,240p.mp4,360p.mp4,480p.mp4,720p.mp4,1080p.mp4,.en_US.vtt,.urlset/manifest.mpd";
                 var player = dashjs.MediaPlayer().create();
                 player.initialize(document.querySelector("#videoPlayer"), url, true);
             })();

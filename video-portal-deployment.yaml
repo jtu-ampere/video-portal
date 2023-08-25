@@ -43,7 +43,7 @@ spec:
           readOnly: true
         env:
           - name: MINIO_ENDPOINT
-            value: "console.minio.mk8snode4.hhii.ampere"
+            value: "console.minio.microk8s.hhii.ampere"
           - name: MINIO_ACCESS_KEY
             value: "[ACCESS-KEY]"
           - name: MINIO_SECRET_KEY

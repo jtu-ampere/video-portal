@@ -53,7 +53,7 @@ def getMinIOVideos(request):
 
             video = Video.objects.create(
                 title=title,
-                mp4_file=title + '/h265/' + title + '_720p.mp4',
+                mp4_file=title + '/h264/' + title + '_720p.mp4',
                 vtt_file=title + '/webvtt/' + title + '.en_US.vtt',
                 gif_file=title + '/gif/ani-preview.gif',
                 thumbnail_file=title + '/gif/thumbnail.gif',
@@ -294,7 +294,7 @@ def step3_upload_to_k8s_pod(k8s_core_v1, filename, minio_client):
       cmd += " && wget -O {}_.en_US.vtt  \"{}\"".format(video_name, vtt_url)
       # download video command, from 240p to 1080p
       for p in ['_240p', '_360p', '_480p', '_720p', '_1080p']:
-          mp4_file_path = video_name + '/h265/' + video_name + p + ".mp4"
+          mp4_file_path = video_name + '/h264/' + video_name + p + ".mp4"
           mp4_url = getMinIOVideosURL(mp4_file_path, minio_client)
           cmd += " && wget -O {}{}.mp4  \"{}\"".format(video_name, p, mp4_url)
       # #

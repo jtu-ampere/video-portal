@@ -31,7 +31,7 @@ spec:
       value: "{DST_BUCKET}"
     resources:
       limits:
-        cpu: "30"
+        cpu: "80"
       requests:
         cpu: "15"
     volumeMounts:

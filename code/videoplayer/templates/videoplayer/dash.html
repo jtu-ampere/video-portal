@@ -56,7 +56,8 @@
       margin: 5px;
       border: 1px solid #ccc;
       float: left;
-      width: 32%;
+      width: 500px;
+      height: 480px;
       box-sizing: border-box;
     }
 
@@ -134,8 +135,8 @@
           <a href="{% url 'video_dash' video_title=video.title %}">
             <div class="video-container">
               <div class="thumbnail-container">
-                <img src="{{ video.thumbnail_url }}" width="100%" alt="Thumbnail">
-                <img src="{{ video.gif_url }}" width="100%" alt="GIF" class="gif-image" data-src="{{ video.gif_url }}">
+                <img src="{{ video.thumbnail_url }}" width="480px" alt="Thumbnail">
+                <img src="{{ video.gif_url }}" width="480px" alt="GIF" class="gif-image" data-src="{{ video.gif_url }}">
               </div>
               </div>
               </a>
