@@ -4,4 +4,4 @@ kubernetes==26.1.0
 minio==7.1.15
 psycopg2_binary==2.9.6
 PyYAML==6.0
-PyYAML==6.0
+django-cors-headers==4.2.0

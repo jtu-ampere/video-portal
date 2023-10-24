@@ -287,8 +287,9 @@ def step3_upload_to_k8s_pod(k8s_core_v1, filename, minio_client):
       vtt_file_path = video_name + '/webvtt/' + video_name + '.en_US.vtt'
       vtt_url = getMinIOVideosURL(vtt_file_path, minio_client)
       command = ["sh", "-c"]
-      cmd = ""
-      cmd += " cd /opt/static/videos/"
+      #cmd = ""
+      #cmd += " cd /opt/static/videos/"
+      cmd = " cd /opt/static/videos/"
       # download vtt command
       #
       cmd += " && wget -O {}_.en_US.vtt  \"{}\"".format(video_name, vtt_url)
@@ -312,7 +313,7 @@ def step3_upload_to_k8s_pod(k8s_core_v1, filename, minio_client):
           # ' 20230623video_.en_US.vtt' will in the 'ls-al' log, but not in the saving log(without the first space)
           expect_log_part = " " + video_name + "_.en_US.vtt"
           if expect_log_part in response:
-              yield 'Video [' + filename.name + '] is ready for video streaming!'
+              yield 'Video [' + filename.name + '] is ready on ['+pod_name+'] for video streaming!'
           else:
               yield 'vod-poc Pod issues'
       except Exception as e:

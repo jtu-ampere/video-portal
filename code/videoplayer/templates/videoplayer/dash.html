@@ -57,7 +57,7 @@
       border: 1px solid #ccc;
       float: left;
       width: 500px;
-      height: 480px;
+      height: 400px;
       box-sizing: border-box;
     }
 
@@ -111,7 +111,7 @@
   <div class="navbar">
     <div class="container">
       <div class="logo_div">
-        <a href="/"><img src="{% static 'logo.png' %}" alt="" class="logo"></a>
+        <a href="{% url 'video_list' %}"><img src="{% static 'logo.png' %}" alt="" class="logo"></a>
       </div>
       <div class="navbar_links">
         <ul class="menu">

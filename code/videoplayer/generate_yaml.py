@@ -15,7 +15,7 @@ spec:
       name: miniocredentials
   containers:
   - name: vpp-app-{UUID}
-    image: docker.io/mrdojojo/video-processor-ffmpeg:1.2
+    image: docker.io/mrdojojo/video-processor-ffmpeg:1.3
     env:
     - name: ENDPOINT_URL
       value: "http://{endpoint}/"
