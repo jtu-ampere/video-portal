@@ -46,10 +46,12 @@ INSTALLED_APPS = [
     # 'uploadvideo',
     # 'processvideoapp',
     'videoplayer',
+    'corsheaders',
     # 'uploadpod',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,6 +59,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+r"^https://\w+\.hhii\.ampere$",
 ]
 
 ROOT_URLCONF = 'vod_backend.urls'
